@@ -14,6 +14,7 @@ import os
 import cgi
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from socketserver import ThreadingMixIn
 
 HOST_NAME = '0.0.0.0'
 PORT_NUMBER = 9000
@@ -58,9 +59,13 @@ class MyHandler(BaseHTTPRequestHandler):
 
         self.wfile.write(response_ok)
 
+        
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+    """Handle requests in a separate thread."""
+
 
 if __name__ == '__main__':
-    server_class = HTTPServer
+    server_class = ThreadedHTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
     print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
     try:
