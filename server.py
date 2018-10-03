@@ -12,6 +12,8 @@ import time
 import sys
 import os
 import cgi
+import logging
+import logging.config
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from socketserver import ThreadingMixIn
@@ -65,12 +67,43 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 
 
 if __name__ == '__main__':
+
+    # Логирование
+    logConfig = {
+        "version":1,
+        "handlers":{
+            "fileHandler":{
+                "class":"logging.FileHandler",
+                "formatter":"verbose",
+                "filename":"server.log",
+            },
+            "consoleHandler":{
+            "class": "logging.StreamHandler",
+            "formatter": "verbose"
+            },
+        },
+        "loggers":{
+            "server":{
+                "handlers":["fileHandler", "consoleHandler"],
+                "level":"INFO",
+            }
+        },
+        "formatters":{
+            "verbose":{
+                "format":"%(asctime)s - %(levelname)s - %(message)s"
+            }
+        }
+    }
+    logging.config.dictConfig(logConfig)
+    logger = logging.getLogger("server")
+
+
     server_class = ThreadedHTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
-    print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
+    logger.info('Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
     httpd.server_close()
-    print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
+    logger.info('Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
