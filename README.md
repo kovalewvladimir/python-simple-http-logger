@@ -3,17 +3,9 @@
 
 ## Запуск
 
-В автоматическом режиме
-`sh run.sh`
-
-В ручном режиме:
-* Запуск сервера логгера
 ```
-mkdir logs
-python3 server.py
-```
-* Запуск простого web клиента
-```
-cd logs
-python3 -m http.server 9001
+    mkdir -p /docker/httplogger
+    cd /docker/httplogger
+    wget https://raw.githubusercontent.com/kovalewvladimir/python-simple-http-logger/master/docker-compose.yml
+    docker-compose up -d
 ```
