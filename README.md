@@ -7,5 +7,6 @@
     mkdir -p /docker/httplogger
     cd /docker/httplogger
     wget https://raw.githubusercontent.com/kovalewvladimir/python-simple-http-logger/master/docker-compose.yml
+    touch server.log
     docker-compose up -d
 ```

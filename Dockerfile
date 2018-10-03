@@ -6,5 +6,6 @@ EXPOSE 9000
 WORKDIR /app
 ADD . /app
 RUN mkdir logs
+RUN touch /app/server.log
 
 CMD ["python3", "server.py"]
