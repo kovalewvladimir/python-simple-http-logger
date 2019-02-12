@@ -35,7 +35,7 @@ class LogHttpHandler(HTTPHandler):
 logger = logging.getLogger("test")
 logger.setLevel(logging.INFO)
 
-_logger = LogHttpHandler('10.1.13.16:9000', '/py/123.txt', 'POST', False)
+_logger = LogHttpHandler('192.1.13.16:9000', '/py/123.txt', 'POST', False)
 _logger.setLevel(logging.INFO)
 
 # formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
